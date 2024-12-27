@@ -1,0 +1,21 @@
+RewriteEngine On
+RewriteBase /
+
+# Rewrite /api/<endpoint> to /api/index.php?request=<endpoint>
+RewriteRule ^api/([^/]+)$ api/index.php?rquest=$1 [QSA,NC,L]
+
+# RewriteRule ^/([^/]+)$ /index.php?request=$1 [QSA,NC,L]
+
+## For general files, if not above, just remove .php
+
+# Allow extensionless .php access
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^([^/.]+)$ $1.php [L]
+
+# Optional: Fallback to index.php for unmatched requests
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+
+
